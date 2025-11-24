@@ -1,0 +1,66 @@
+[project]
+name = "thermochemistry_library"
+description = "Thermochemistry Library"
+license = "MIT"
+version = "0.0.1"
+readme = "README.md"
+keywords = []
+authors = [{name = ""}]
+requires-python = ">=3.13"
+dependencies = [
+    "numpy",
+    "scipy",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3",
+    "pytest>=8.4",
+    "pytest-cov>=7.0",
+    "ruff>=0.14",
+    "ty>=0.0.1a25",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "B",  # bugbear
+    "D",  # pydocstyle
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming conventions
+    "W",  # pycodestyle warnings
+    "C4", # comprehensions
+    "PL", # pylint
+    "PT", # flake8-pytest-style
+    "PIE", # misc lints
+    "PYI", # flake8-pyi
+    "TID", # tidy imports
+    "TCH", # type-checking imports
+    "RUF", # Ruff-specific rules
+    "RSE", # flake8-raise
+    "ICN001", # unconventional-import-alias
+]
+ignore = [
+    "N806", # Non-lowercase variable in function
+    "PLR0911", # Too many returns
+    "PLR0912", # Too many branches
+    "PLR0913", # Too many arguments to function call
+    "PLR0914", # Too many locals
+    "PLR0915", # Too many statements
+    "PLR1702", # Too many nested-blocks
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "thermochemistry_library"]
+addopts = "--doctest-modules"
+doctest_optionflags = "NORMALIZE_WHITESPACE"
