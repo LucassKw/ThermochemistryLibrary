@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/LucassKw/thermochemistry_library)](
 https://github.com/LucassKw/thermochemistry_library/blob/main/LICENSE)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/<USERNAME>/thermochemistry_library/test.yml?branch=main)](
+[![CI](https://img.shields.io/github/actions/workflow/status/LucassKw/thermochemistry_library/test.yml?branch=main)](
 https://github.com/LucassKw/thermochemistry_library/actions)
 
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](
