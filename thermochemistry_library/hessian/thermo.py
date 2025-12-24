@@ -18,7 +18,8 @@ def calculate_thermo(
     coords: np.ndarray,
     T: float,
     linear: bool = False,
-    correction_1M: bool = True
+    correction_1M: bool = True,
+    electronic_energy: float = 0.0
 ) -> ThermoResults:
     
     # 1. Run Vibrational Analysis
@@ -35,7 +36,7 @@ def calculate_thermo(
     total_mass_kg = total_mass_amu * 1.66053906660e-27
     
     # 3. Calculate Thermochemistry
-    enthalpy_calc = Enthalpy(freqs_cm=freqs, T=T, linear=is_linear)
+    enthalpy_calc = Enthalpy(freqs_cm=freqs, T=T, linear=is_linear, electronic_energy=electronic_energy)
     entropy_calc = Entropy(
         T=T, 
         mass_kg=total_mass_kg, 
