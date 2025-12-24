@@ -2,10 +2,6 @@
 
 [![License](https://img.shields.io/github/license/LucassKw/ThermochemistryLibrary)](
 https://github.com/LucassKw/ThermochemistryLibrary/blob/main/LICENSE)
-
-[![CI](https://img.shields.io/github/actions/workflow/status/LucassKw/ThermochemistryLibrary/test.yml?branch=main)](
-https://github.com/LucassKw/ThermochemistryLibrary/actions)
-
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](
 https://github.com/astral-sh/ruff)
 
