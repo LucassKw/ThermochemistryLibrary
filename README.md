@@ -1,10 +1,10 @@
 # Thermochemistry Library
 
-[![License](https://img.shields.io/github/license/LucassKw/thermochemistry_library)](
-https://github.com/LucassKw/thermochemistry_library/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/LucassKw/ThermochemistryLibrary)](
+https://github.com/LucassKw/ThermochemistryLibrary/blob/main/LICENSE)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/LucassKw/thermochemistry_library/test.yml?branch=main)](
-https://github.com/LucassKw/thermochemistry_library/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/LucassKw/ThermochemistryLibrary/test.yml?branch=main)](
+https://github.com/LucassKw/ThermochemistryLibrary/actions)
 
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](
 https://github.com/astral-sh/ruff)
