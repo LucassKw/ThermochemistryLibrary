@@ -38,6 +38,8 @@ freqs = np.array([
     3055, 3071
 ])
 
+elec_energy = -79.858399 # Hartrees
+
 hessian = None # using frequencies
 
 
@@ -51,4 +53,5 @@ ethane_data = {
     "masses": masses,
     "principal_moments": principal_moments,
     "freqs": freqs,
+    "electronic_energy": elec_energy,
 }
