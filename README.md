@@ -2,6 +2,8 @@
 
 [![License](https://img.shields.io/github/license/LucassKw/ThermochemistryLibrary)](
 https://github.com/LucassKw/ThermochemistryLibrary/blob/main/LICENSE)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](
+https://github.com/astral-sh/ruff)
 
 This library converts a cartesian hessian of nuclear second derivatives into vibrational and thermodynamic quantities, following similar framework used in Gaussian and [GoodVibes](https://github.com/patonlab/GoodVibes), but in a modular and Python-native implementation.
 
