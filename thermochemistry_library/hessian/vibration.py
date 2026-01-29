@@ -1,6 +1,7 @@
 """Vibrational analysis utilities."""
 
 from dataclasses import dataclass, field
+
 import numpy as np
 
 C = 2.99792458e10

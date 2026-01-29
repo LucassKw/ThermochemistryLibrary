@@ -1,10 +1,10 @@
-import sys
+"""Ethane thermochemistry example using parsed Hessian data."""
+
 import numpy as np
 
 from tests.ethane_data import HESSIAN_RAW, parse_hessian
 from thermochemistry_library.hessian.thermo import calculate_thermo
 from thermochemistry_library.hessian.vibration import VibrationalAnalysis
-
 
 T = 298.150
 LINEAR = False
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     for i, f in enumerate(freqs):
         print(f"{f:10.4f}", end="\n" if (i+1)%3==0 else "  ")
-    print("\n") 
+    print("\n")
 
     try:
         results = calculate_thermo(

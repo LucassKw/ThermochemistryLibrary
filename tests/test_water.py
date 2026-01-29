@@ -9,6 +9,7 @@ from thermochemistry_library.hessian.vibration import VibrationalAnalysis
 T = 298.15
 LINEAR = False
 ELEM_ENERGY = -76.02676074
+EXPECTED_FREQ_COUNT = 3
 
 masses = np.array([
     15.999,
@@ -59,8 +60,9 @@ def _run_water():
 
 
 def test_water():
+    """Smoke test that water frequencies compute."""
     freqs, _ = _run_water()
-    assert len(freqs) == 3
+    assert len(freqs) == EXPECTED_FREQ_COUNT
 
 
 if __name__ == "__main__":

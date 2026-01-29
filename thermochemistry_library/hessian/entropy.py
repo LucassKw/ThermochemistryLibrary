@@ -117,7 +117,6 @@ class Entropy:
 
     def total_entropy(self, correction_1m=False):
         """Calculate total entropy."""
-
         s_total = (
             self.translational_entropy() + self.rotational_entropy() + self.vibrational_entropy()
         )
