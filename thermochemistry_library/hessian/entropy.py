@@ -23,15 +23,16 @@ class Entropy:
     linear: bool = False
     qh_type: str | None = None
     qh_cutoff: float = 100.0
+    symmetry_number: int = 1
 
     def __post_init__(self):
         """Normalize inputs after initialization."""
         self.m = self.mass_kg
         self.Ia, self.Ib, self.Ic = np.array(self.principal_moments)
         self.freqs = np.array(self.frequencies_cm)
-        self.sigma = 1
+        self.sigma = self.symmetry_number
         self.g_e = 1
-        self.BAV = 1.00e-44  # Average moment of inertia for Grimme's method
+        self.BAV = 1.00e-44
 
     def translational_entropy(self):
         """Calculate translational entropy using the Sackur-Tetrode equation."""
@@ -61,8 +62,6 @@ class Entropy:
 
     def _calc_rrho_entropy(self, freqs):
         # Calculate harmonic entropy for an array of frequencies
-        # Filter out negative/imaginary frequencies just in case.
-        # These should be handled before this step.
         valid_freqs = freqs[freqs > 0]
         theta = (h * c * valid_freqs) / K_B
         x = theta / self.T
@@ -72,7 +71,6 @@ class Entropy:
 
     def _calc_free_rotor_entropy(self):
         # Calculate free rotor entropy for each mode (Grimme)
-        # mu = h / (8 * pi^2 * v * c)
         valid_freqs = self.freqs[self.freqs > 0]
         mu = h / (8 * np.pi**2 * valid_freqs * c)
         mu_prime = (mu * self.BAV) / (mu + self.BAV)
@@ -94,7 +92,6 @@ class Entropy:
 
         if self.qh_type.lower() == "grimme":
             # S = w * S_RRHO + (1-w) * S_rotor
-            # we need per-mode entropy for mixing
             valid_freqs = self.freqs[self.freqs > 0]
 
             # RRHO per mode
@@ -112,24 +109,15 @@ class Entropy:
             return s_vib
 
         if self.qh_type.lower() == "truhlar":
-            # If freq < cutoff, replace with cutoff for entropy calc
-            # effectively: calculate entropy using max(freq, cutoff)
-
             mod_freqs = np.array(self.freqs)
             mod_freqs = np.where(mod_freqs < self.qh_cutoff, self.qh_cutoff, mod_freqs)
             return self._calc_rrho_entropy(mod_freqs)
 
-        # Fallback to harmonic
         return self._calc_rrho_entropy(self.freqs)
 
-    def total_entropy(self, correction_1m=True):
-        """Calculate total entropy.
+    def total_entropy(self, correction_1m=False):
+        """Calculate total entropy."""
 
-        Parameters
-        ----------
-        correction_1m : bool
-            Whether to apply the standard state correction (1 atm -> 1 M).
-        """
         s_total = (
             self.translational_entropy() + self.rotational_entropy() + self.vibrational_entropy()
         )

@@ -1,9 +1,7 @@
 """Vibrational analysis utilities."""
 
 from dataclasses import dataclass, field
-
 import numpy as np
-import scipy.linalg
 
 C = 2.99792458e10
 ANGSTROM_PER_BOHR = 0.529177210903
@@ -21,6 +19,7 @@ class VibrationalAnalysis:
     hessian_input: np.ndarray
     masses_amu: np.ndarray
     coordinates: np.ndarray
+    hessian_in_angstrom: bool = False
 
     mass_weighted: np.ndarray | None = field(init=False, default=None)
     eigvals: np.ndarray | None = field(init=False, default=None)
@@ -123,10 +122,10 @@ class VibrationalAnalysis:
 
     def run(self):
         """Run vibrational analysis."""
-        # Hessian in Hartree/Bohr^2 -> convert if needed, but here assuming input is consistent
-        # Code actually converts it:
+        # Convert Hartree/Ang^2 -> Hartree/Bohr^2 when needed.
         h_cart = self.hessian.copy()
-        h_cart *= ANGSTROM_PER_BOHR**2
+        if self.hessian_in_angstrom:
+            h_cart *= ANGSTROM_PER_BOHR**2
 
         # Mass-weighted Hessian
         h_mwc = h_cart.copy()
@@ -137,33 +136,42 @@ class VibrationalAnalysis:
 
         self.mass_weighted = h_mwc
 
-        # Get matrix D which eliminates rotational/translational motion
-        d_tr = self._generate_translation_rotation_vectors()
-        d_matrix = scipy.linalg.null_space(d_tr)
+        # Diagonalize mass-weighted Hessian
+        e_val, l_mat = np.linalg.eigh(h_mwc)
 
-        # Convert hessian to new coordinates and find freqs and modes
-        h_int = d_matrix.T @ h_mwc @ d_matrix
-        e_val, l_mat = np.linalg.eigh(h_int)
-
-        # Eigenvalues to frequencies
+        # Eigenvalues to frequencies (cm^-1)
         conversion_factor = 5140.4847323
 
-        freqs_cm = []
-        for val in e_val:
-            if val >= 0:
-                freqs_cm.append(np.sqrt(val) * conversion_factor)
-            else:
-                freqs_cm.append(-np.sqrt(abs(val)) * conversion_factor)
+        freqs_cm = np.array(
+            [
+                np.sqrt(val) * conversion_factor
+                if val >= 0
+                else -np.sqrt(abs(val)) * conversion_factor
+                for val in e_val
+            ]
+        )
 
-        freqs_cm = np.array(freqs_cm)
+        # Remove translational/rotational modes by smallest |frequency|
+        n_remove = 5 if self.is_linear else 6
+        tr_indices = np.argsort(np.abs(freqs_cm))[:n_remove]
+        keep_mask = np.ones(freqs_cm.shape[0], dtype=bool)
+        keep_mask[tr_indices] = False
+
+        freqs_cm = freqs_cm[keep_mask]
+        l_mat = l_mat[:, keep_mask]
 
         # Mass diagonal matrix (M)
         m_diag = np.diag(inv_sqrt_mass)
 
         # Get modes in cartesian coordinates
-        l_cart = m_diag @ d_matrix @ l_mat
+        l_cart = m_diag @ l_mat
 
         num_modes = l_cart.shape[1]
+
+        # Sort by frequency
+        order = np.argsort(freqs_cm)
+        freqs_cm = freqs_cm[order]
+        l_cart = l_cart[:, order]
 
         self.frequencies = freqs_cm
         self.reduced_masses = np.zeros(num_modes)

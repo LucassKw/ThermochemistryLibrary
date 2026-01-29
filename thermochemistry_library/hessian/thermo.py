@@ -26,16 +26,18 @@ def calculate_thermo(
     coords: np.ndarray,
     temperature: float,
     linear: bool = False,
-    correction_1m: bool = True,
+    correction_1m: bool = False,
     electronic_energy: float = 0.0,
     frequency_scale_factor: float = 1.0,
+    symmetry_number: int = 1,
+    hessian_in_angstrom: bool = False,
     quasi_harmonic: bool = False,
     qh_type: str = "grimme",
     qh_cutoff: float = 100.0,
 ) -> ThermoResults:
     """Calculate thermochemistry properties."""
     # 1. Run Vibrational Analysis
-    vib = VibrationalAnalysis(hessian, masses, coords)
+    vib = VibrationalAnalysis(hessian, masses, coords, hessian_in_angstrom=hessian_in_angstrom)
     vib_results = vib.run()
 
     freqs = vib_results["frequencies"]
@@ -72,6 +74,7 @@ def calculate_thermo(
         linear=is_linear,
         qh_type=entropy_qh_type,
         qh_cutoff=qh_cutoff,
+        symmetry_number=symmetry_number,
     )
     gibbs_calc = Gibbs(enthalpy_calc, entropy_calc)
 
