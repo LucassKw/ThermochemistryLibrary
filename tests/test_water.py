@@ -8,7 +8,7 @@ from thermochemistry_library.hessian.vibration import VibrationalAnalysis
 
 T = 298.15
 LINEAR = False
-ELEM_ENERGY = -76.02676074
+ELEM_ENERGY = -76.3681281356
 EXPECTED_FREQ_COUNT = 3
 
 masses = np.array([
