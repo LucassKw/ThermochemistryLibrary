@@ -8,7 +8,7 @@ from thermochemistry_library.hessian.vibration import VibrationalAnalysis
 
 T = 298.150
 LINEAR = False
-elem_energy = -79.8304209466
+electronic_energy = -79.8304209466
 
 masses = np.array([
     12.0000000,
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             masses=masses,
             coords=coords,
             temperature=T,
-            electronic_energy=elem_energy,
+            electronic_energy=electronic_energy,
             linear=LINEAR,
             correction_1m=False,
             symmetry_number=1,

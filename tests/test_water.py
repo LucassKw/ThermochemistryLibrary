@@ -8,7 +8,7 @@ from thermochemistry_library.hessian.vibration import VibrationalAnalysis
 
 T = 298.15
 LINEAR = False
-ELEM_ENERGY = -76.02676074
+elec_energy = -76.02676074
 EXPECTED_FREQ_COUNT = 3
 
 masses = np.array([
@@ -40,7 +40,7 @@ def _run_water():
         masses=masses,
         coords=coords,
         temperature=T,
-        electronic_energy=ELEM_ENERGY,
+        electronic_energy=elec_energy,
         linear=LINEAR,
         correction_1m=False,
         symmetry_number=2,
