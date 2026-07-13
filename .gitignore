@@ -177,3 +177,6 @@ pyrightconfig.json
 
 # Pixi
 .pixi
+
+# macOS metadata
+.DS_Store
