@@ -100,10 +100,12 @@ def _print_results(freqs, results):
 
 @pytest.fixture(scope="module")
 def ethane_results():
+    """Calculate ethane properties once for all tests in this module."""
     return _run_ethane()
 
 
 def test_ethane_frequencies(ethane_results):
+    """Check ethane frequencies against the reference calculation."""
     freqs, _ = ethane_results
 
     assert len(freqs) == EXPECTED_FREQ_COUNT
@@ -112,6 +114,7 @@ def test_ethane_frequencies(ethane_results):
 
 
 def test_ethane_thermodynamics(ethane_results):
+    """Check ethane thermodynamic properties against reference values."""
     _, results = ethane_results
 
     assert results.zero_point_energy == pytest.approx(EXPECTED_ZERO_POINT_ENERGY, abs=ABS_TOL)

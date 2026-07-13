@@ -70,10 +70,12 @@ def _print_results(freqs, results):
 
 @pytest.fixture(scope="module")
 def water_results():
+    """Calculate water properties once for all tests in this module."""
     return _run_water()
 
 
 def test_water_frequencies(water_results):
+    """Check water frequencies against the reference calculation."""
     freqs, _ = water_results
 
     assert len(freqs) == EXPECTED_FREQ_COUNT
@@ -82,6 +84,7 @@ def test_water_frequencies(water_results):
 
 
 def test_water_thermodynamics(water_results):
+    """Check water thermodynamic properties against reference values."""
     _, results = water_results
 
     assert results.zero_point_energy == pytest.approx(EXPECTED_ZERO_POINT_ENERGY, abs=ABS_TOL)
