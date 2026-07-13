@@ -1,8 +1,8 @@
 [project]
 name = "thermochemistry_library"
-description = "Thermochemistry Library"
+description = "converting Hessian matrices to thermo data"
 license = "MIT"
-version = "0.0.1"
+version = "0.0.2"
 readme = "README.md"
 keywords = []
 authors = [{name = ""}]
